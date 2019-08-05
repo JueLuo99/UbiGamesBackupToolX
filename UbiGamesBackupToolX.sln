@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29020.237
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UbiGamesBackupToolX", "UbiGamesBackupToolX\UbiGamesBackupToolX.csproj", "{FD40C5E1-0472-4475-B5E6-23D23ABF0FEB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FD40C5E1-0472-4475-B5E6-23D23ABF0FEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD40C5E1-0472-4475-B5E6-23D23ABF0FEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD40C5E1-0472-4475-B5E6-23D23ABF0FEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD40C5E1-0472-4475-B5E6-23D23ABF0FEB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6E03B875-7886-4D49-9994-3D6BBCA832B3}
+	EndGlobalSection
+EndGlobal

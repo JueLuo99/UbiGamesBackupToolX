@@ -1,0 +1,91 @@
+﻿<Page x:Class="UbiGamesBackupToolX.Pages.MainPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:UbiGamesBackupToolX.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="MainPage" Loaded="Page_Loaded">
+    <DockPanel Background="White">
+        <StackPanel DockPanel.Dock="Left" Margin="5,5,5,5">
+            <Button x:Name="SettingBtn" HorizontalAlignment="Left" VerticalAlignment="Top" Width="48" Height="48" Click="SettingBtn_Click" ToolTip="设置">
+                <Button.Background>
+                    <ImageBrush ImageSource="../Resources/setting.png" Stretch="None"/>
+                </Button.Background>
+            </Button>
+            <ScrollViewer DockPanel.Dock="Bottom" Style="{StaticResource for_scrollviewer}">
+                <ItemsControl x:Name="UserListView">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel ScrollViewer.VerticalScrollBarVisibility="Auto" Orientation="Vertical" ScrollViewer.CanContentScroll="True"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Ellipse Tag="{Binding}" Style="{StaticResource UserImgStyle}" Margin="0,5" Height="48" Width="48" ToolTip="{Binding Path=UNAME}" MouseLeftButtonUp="UserImgPanelMouseLeftUp">
+                                <Ellipse.Fill>
+                                    <ImageBrush ImageSource="{Binding Path=USERIMAGE}"/>
+                                </Ellipse.Fill>
+                            </Ellipse>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </StackPanel>
+        <DockPanel DockPanel.Dock="Right" Width="48" Margin="5,5,5,5">
+            <Button x:Name="ChangeModeBtn" Width="48" Height="48" VerticalAlignment="Top" DockPanel.Dock="Top" Click="ChangeModeBtn_Click" ToolTip="切换模式">
+                <Button.Background>
+                    <ImageBrush ImageSource="../Resources/changemode.png" Stretch="None"/>
+                </Button.Background>
+            </Button>
+            <Button Width="48" Height="48" VerticalAlignment="Top" DockPanel.Dock="Top" Click="ALLPanelSelect_Click" ToolTip="全反选">
+                <Button.Background>
+                    <ImageBrush ImageSource="../Resources/allselect.png" Stretch="None"/>
+                </Button.Background>
+            </Button>
+            <Button x:Name="BackReBtn" Width="48" Height="48" VerticalAlignment="Bottom" Click="BackReBtn_Click" Background="{StaticResource BackupImageBrush}" ToolTip="备份"/>
+        </DockPanel>
+        <DockPanel x:Name="Main" Margin="0,5">
+            <Label x:Name="toolstatus" DockPanel.Dock="Top" HorizontalContentAlignment="Center">选择将要备份的游戏存档</Label>
+            <ScrollViewer VerticalScrollBarVisibility="Auto" Style="{DynamicResource for_scrollviewer}" HorizontalScrollBarVisibility="Disabled">
+                <ItemsControl  x:Name="GameListView" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <WrapPanel Tag="{Binding Path=id}" Width="330" HorizontalAlignment="Center" Margin="4,4,4,4" MouseLeftButtonUp="GamePanelMouseLeftUp">
+                                <WrapPanel.Resources>
+                                    <Style TargetType="WrapPanel">
+                                        <Setter Property="Background" Value="{StaticResource GamePanelColorBrush}"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Path=selected}" Value="True">
+                                                <Setter Property="Background" Value="{StaticResource GamePanelSelectedColorBrush}"/>
+                                            </DataTrigger>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Background" Value="{StaticResource GamePanelMouseOverColorBrush}"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </WrapPanel.Resources>
+                                <Rectangle Width="330" Height="181">
+                                    <Rectangle.Fill>
+                                        <ImageBrush ImageSource="{Binding Path=imgpath}"/>
+                                    </Rectangle.Fill>
+                                </Rectangle>
+                                <Label Width="330" HorizontalContentAlignment="Center" Content="{Binding Path=name}"/>
+                                <Label Width="330" HorizontalContentAlignment="Center" Content="{Binding Path=Version}"/>
+                            </WrapPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+            <!--<ScrollViewer VerticalScrollBarVisibility="Auto" Style="{StaticResource for_scrollviewer}" HorizontalScrollBarVisibility="Disabled">
+                <WrapPanel x:Name="GameListView"/>
+            </ScrollViewer>-->
+        </DockPanel>
+    </DockPanel>
+</Page>
