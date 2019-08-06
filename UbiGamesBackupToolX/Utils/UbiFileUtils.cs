@@ -242,6 +242,11 @@ namespace UbiGamesBackupToolX.Utils
                     {
                         if (g.id.Equals(id))
                         {
+                            string imgpath = GAMELOGOCACHE+"\\" + g.img;
+                            if (File.Exists(imgpath))
+                            {
+                                g.imgpath = imgpath;
+                            }
                             Ugamelist.Add(g);
                             break;
                         }
