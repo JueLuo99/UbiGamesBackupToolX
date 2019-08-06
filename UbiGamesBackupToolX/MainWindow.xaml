@@ -11,7 +11,7 @@
         AllowsTransparency="True"
         WindowStyle="None" Loaded="Window_Loaded"
         MouseMove="Window_MouseMove" StateChanged="Window_StateChanged" Closing="Window_Closing"
-        WindowStartupLocation="CenterScreen" Background="#00000000" Icon="Resources/UbiGameBackupToolICO.ico"  ShowInTaskbar="False">
+        WindowStartupLocation="CenterScreen" Background="#00000000" Icon="Resources/UbiGameBackupToolICO.ico">
     <DockPanel>
         <DockPanel x:Name="TitlePanel" DockPanel.Dock="Top"  MouseLeftButtonDown="TitlePanel_MouseLeftButtonDown" MouseLeftButtonUp="TitlePanel_MouseLeftButtonUp" MouseMove="TitlePanel_MouseMove" Background="#CCE2E2E2">
             <Image Width="32" Height="32" Source="Resources/UbiGameBackupToolICO.ico"/>
