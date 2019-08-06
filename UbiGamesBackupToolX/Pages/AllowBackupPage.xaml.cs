@@ -91,16 +91,14 @@ namespace UbiGamesBackupToolX.Pages
 
         private void AddListenerGameBtn_OnClicked(object sender, RoutedEventArgs e)
         {
-            //ChooseListenerGameWindow chooseListenerGameWindow = new ChooseListenerGameWindow
-            //{
-            //    Owner = this
-            //};
-            //chooseListenerGameWindow.ShowDialog();
-            //GC.Collect();
-
+            ChooseGameWindow chooseGameWindow = new ChooseGameWindow
+            {
+                Owner = settingPage.mainWindow
+            };
+            chooseGameWindow.ShowDialog();
+            GC.Collect();
             //gameStatusListener.restart();
-            //TODO
-            //此处刷新监听列表
+            //TODO 此处刷新监听列表
         }
 
         private void ExitGameTipStatusCkb_Checked(object sender, RoutedEventArgs e)
