@@ -40,7 +40,7 @@ namespace UbiGamesBackupToolX
         public static extern uint RegisterWindowMessage(string Message);
         [DllImport("User32.dll", CharSet = CharSet.Auto)]
         public static extern bool DeregisterShellHookWindow(IntPtr hHandle);
-        [DllImport("user32.dll", EntryPoint = "GetWindowText")]
+        [DllImport("user32.dll", EntryPoint = "GetWindowText", CharSet = CharSet.Unicode)]
         public static extern int GetWindowText(IntPtr hwnd, StringBuilder lpString, int cch);
         [DllImport("kernel32.dll")]
         public static extern Boolean AllocConsole();
@@ -120,11 +120,12 @@ namespace UbiGamesBackupToolX
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             showMainPage();
-            if (Config.Instance.AllowBackup)
-            {
-                SetShellHook();
-            }
+            //if (Config.Instance.AllowBackup)
+            //{
+            //    SetShellHook();
+            //}
             //TODO 托盘图标等相关 主页面初始化优化
+            SetShellHook();
         }
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
@@ -140,7 +141,7 @@ namespace UbiGamesBackupToolX
         private void Min_Click(object sender, RoutedEventArgs e)
         {
             //WindowState = WindowState.Minimized;
-            this.Visibility = Visibility.Hidden;
+            this.Hide();
         }
         private void CloseBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -226,7 +227,15 @@ namespace UbiGamesBackupToolX
                     case ShellEvents.HSHELL_WINDOWCREATED:
                         GetWindowText(lParam, createWT, createWT.Capacity);
 #if DEBUG
-                        ConsoleLogHelper.WriteLineInfo("窗体" + createWT.ToString() + "被创建");
+                        ConsoleLogHelper.WriteLineInfo("窗体" + EncodingConvert.GetUtf8ByUnicodeString(createWT.ToString())+ "被创建");
+                        if (createWT.ToString().Equals("Ghost Recon® Wildlands"))
+                        {
+                            ConsoleLogHelper.WriteLineInfo("游戏幽灵行动启动");
+                        }
+                        else
+                        {
+
+                        }
 #endif
                         break;
                     case ShellEvents.HSHELL_WINDOWDESTROYED:
