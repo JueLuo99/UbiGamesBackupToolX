@@ -624,6 +624,22 @@
     "AppName": ""
   },
   {
+    "id": 3600,
+    "name": "Trials Rising",
+    "Version": "Uplay",
+    "img": "",
+    "Title": "Trials Rising",
+    "AppName": ""
+  },
+  {
+    "id": 3601,
+    "name": "Trials Rising",
+    "Version": "Steam",
+    "img": "",
+    "Title": "Trials Rising",
+    "AppName": ""
+  },
+  {
     "id": 3619,
     "name": "Watch_Dogs 2",
     "img": "8ed50864d177441829e82c7afb003f39.png",
@@ -634,7 +650,7 @@
   {
     "id": 3774,
     "name": "Monopoly Puls",
-    "img": "",
+    "img": "0a3e183a7d4e98e614b0bc8c153bac98.png",
     "Version": "Uplay",
     "Title": "Monopoly Puls",
     "AppName": ""
@@ -643,7 +659,7 @@
     "id": 3775,
     "name": "Monopoly Puls",
     "Version": "Steam",
-    "img": "",
+    "img": "0a3e183a7d4e98e614b0bc8c153bac98.png",
     "Title": "Monopoly Puls",
     "AppName": ""
   },
@@ -656,11 +672,27 @@
     "AppName": ""
   },
   {
+    "id": 4553,
+    "name": "Anno 1800",
+    "Version": "Uplay",
+    "img": "",
+    "Title": "Anno 1800",
+    "AppName": ""
+  },
+  {
+    "id": 4554,
+    "name": "Anno 1800",
+    "Version": "Steam",
+    "img": "",
+    "Title": "Anno 1800",
+    "AppName": ""
+  },
+  {
     "id": 4472,
     "name": "Steep Open Beta",
     "Version": "Steam",
     "img": "",
-    "Title": "Steep",
+    "Title": "Steep Open Beta",
     "AppName": ""
   },
   {
@@ -688,11 +720,67 @@
     "AppName": ""
   },
   {
+    "id": 5059,
+    "name": "Assassin's Creed Odyssey",
+    "Version": "Uplay",
+    "img": "",
+    "Title": "Assassin's Creed Odyssey",
+    "AppName": ""
+  },
+  {
     "id": 5092,
     "name": "Assassin's Creed Odyssey",
     "Version": "Steam",
     "img": "",
     "Title": "Assassin's Creed Odyssey",
+    "AppName": ""
+  },
+  {
+    "id": 5183,
+    "name": "Assassin's Creed 3 Remastered",
+    "Version": "Uplay",
+    "img": "",
+    "Title": "Assassin's Creed 3 Remastered",
+    "AppName": ""
+  },
+  {
+    "id": 5184,
+    "name": "Assassin's Creed 3 Remastered",
+    "Version": "Steam",
+    "img": "",
+    "Title": "Assassin's Creed 3 Remastered",
+    "AppName": ""
+  },
+  {
+    "id": 5210,
+    "name": "Far Cry New Dawn",
+    "Version": "Uplay",
+    "img": "",
+    "Title": "Far Cry New Dawn",
+    "AppName": ""
+  },
+  {
+    "id": 5211,
+    "name": "Far Cry New Dawn",
+    "Version": "Uplay",
+    "img": "",
+    "Title": "Far Cry New Dawn",
+    "AppName": ""
+  },
+  {
+    "id": 5233,
+    "name": "Trials Rising - Open Beta",
+    "Version": "Uplay",
+    "img": "",
+    "Title": "Trials Rising - Open Beta",
+    "AppName": ""
+  },
+  {
+    "id": 5277,
+    "name": "StarLink: Battle for Atlas",
+    "Version": "Uplay",
+    "img": "",
+    "Title": "StarLink: Battle for Atlas",
     "AppName": ""
   },
   {
@@ -725,6 +813,14 @@
     "Version": "Steam",
     "img": "",
     "Title": "Steep Road To The Olympics",
+    "AppName": ""
+  },
+  {
+    "id": 103800,
+    "name": "Anno 1800 - Open Beta",
+    "Version": "Uplay",
+    "img": "",
+    "Title": "Anno 1800 - Open Beta",
     "AppName": ""
   }
 ]
