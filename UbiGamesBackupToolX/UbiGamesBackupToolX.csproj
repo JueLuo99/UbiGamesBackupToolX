@@ -66,7 +66,7 @@
     <Compile Include="ChooseGameWindow.xaml.cs">
       <DependentUpon>ChooseGameWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Listener\GameProcessListener.cs" />
+    <Compile Include="Listener\GameRunStatusListener.cs" />
     <Compile Include="Listener\GameStatusListener.cs" />
     <Compile Include="Pages\AboutPage.xaml.cs">
       <DependentUpon>AboutPage.xaml</DependentUpon>

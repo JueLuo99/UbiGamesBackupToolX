@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -16,6 +17,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using UbiGamesBackupToolX.Bean;
+using UbiGamesBackupToolX.Listener;
 using UbiGamesBackupToolX.Pages;
 using UbiGamesBackupToolX.Utils;
 using static UbiGamesBackupToolX.Utils.Win32;
@@ -50,6 +52,10 @@ namespace UbiGamesBackupToolX
         [return: MarshalAs(UnmanagedType.Bool)]
         static extern bool GetWindowRect(IntPtr hWnd, out RECT lpRect);
 
+
+
+        NotifyIcon notifyIcon;
+        GameRunStatusListener gameRunStatusListener;
 
         /// <summary>
         /// 用以存储Hook到的被创建窗体名称
@@ -126,7 +132,110 @@ namespace UbiGamesBackupToolX
             //}
             //TODO 托盘图标等相关 主页面初始化优化
             SetShellHook();
+            gameRunStatusListener = new GameRunStatusListener();
+            gameRunStatusListener.RunGameEvent += new GameRunStatusListener.GameEventHandler(this.RunGameCallback);
+            gameRunStatusListener.ExitGameEvent += new GameRunStatusListener.GameEventHandler(this.ExitGameCallback);
+
+            notifyIcon = new NotifyIcon();
+            notifyIcon.Icon = UbiGamesBackupToolX.Properties.Resources.UbiGameBackupToolICO;
+            this.notifyIcon.MouseClick += new System.Windows.Forms.MouseEventHandler(this.NotifyIcon_MouseClick);
+            notifyIcon.Visible = true;
         }
+        private void NotifyIcon_MouseClick(object sender, System.Windows.Forms.MouseEventArgs e)
+        {
+            //this.WindowState = WindowState.Normal;
+            //this.Visibility = Visibility.Visible;
+            this.Show();
+            //this.Activate();
+        }
+        private void ExitGameCallback(GameRunStatusListener.GameEventArgs gameEventArgs)
+        {
+            //游戏退出
+            foreach (Game g in gameEventArgs.game)
+            {
+                Console.WriteLine("游戏   " + g.name + "   已退出...");
+            }
+            Action<string, List<Game>> action = new Action<string, List<Game>>(ShowExitGameTip);
+            this.Dispatcher.BeginInvoke(action, gameEventArgs.game[0].Title, gameEventArgs.game);
+        }
+
+        private void RunGameCallback(GameRunStatusListener.GameEventArgs gameEventArgs)
+        {
+            //游戏启动
+            foreach (Game g in gameEventArgs.game)
+            {
+                Console.WriteLine("游戏   " + g.name + "   已启动...");
+            }
+            Action<string> action = new Action<string>(ShowRunGameTip);
+            this.Dispatcher.BeginInvoke(action, gameEventArgs.game[0].Title);
+        }
+
+        private void ShowRunGameTip(string name)
+        {
+            int tipShowMilliseconds = 1000;
+            string tipTitle = name + "已启动";
+            string tipContent;
+            ToolTipIcon tipType;
+            if (UbiFileUtils.GetNowLoginUserID() == null)
+            {
+                tipContent = "准备失败，检查是否勾选“记住我”";
+                tipType = ToolTipIcon.Warning;
+            }
+            else
+            {
+                tipContent = "备份已准备";
+                tipType = ToolTipIcon.Info;
+            }
+            if (Config.Instance.RunGameTipStatus)
+            {
+                notifyIcon.ShowBalloonTip(tipShowMilliseconds, tipTitle, tipContent, tipType);
+            }
+        }
+        private void ShowExitGameTip(string name, List<Game> games)
+        {
+            int tipShowMilliseconds = 1000;
+            string tipTitle = name + "已结束";
+            string tipContent;
+            ToolTipIcon tipType;
+            string UID = UbiFileUtils.GetNowLoginUserID();
+            if (UID == null)
+            {
+                tipContent = "尝试失败，检查是否勾选“记住我”";
+                tipType = ToolTipIcon.Warning;
+            }
+            else
+            {
+                try
+                {
+                    String backupPath = Config.Instance.AllowBackupPath + System.IO.Path.DirectorySeparatorChar + mainPage.SelectUser.UNAME;
+                    if (!Directory.Exists(backupPath))
+                    {
+                        Directory.CreateDirectory(backupPath);
+                    }
+                    foreach (Game g in games)
+                    {
+                        if (Directory.Exists(UbiFileUtils.UPLAYSAVEGAME + System.IO.Path.DirectorySeparatorChar + UID + System.IO.Path.DirectorySeparatorChar + g.id))
+                        {
+                            UbiFileUtils.CopyDirectory(UbiFileUtils.UPLAYSAVEGAME + System.IO.Path.DirectorySeparatorChar + UID + System.IO.Path.DirectorySeparatorChar + g.id, backupPath);
+                        }
+                    }
+                    UbiFileUtils.OutBackupInfo(backupPath, new UserInfo { UID = UID, UNAME = UbiFileUtils.GetUserNameforUID(UID), BackupTime = string.Format("{0:yyyy-MM-dd HH.mm.ss}", DateTime.Now), USERSAVEGAME = backupPath });
+                    tipContent = "备份完成";
+                    tipType = ToolTipIcon.Info;
+                }
+                catch (Exception e)
+                {
+                    tipContent = "备份失败";
+                    tipType = ToolTipIcon.Error;
+                    System.Windows.Forms.MessageBox.Show(e.ToString());
+                }
+            }
+            if (Config.Instance.ExitGameTipStatus)
+            {
+                notifyIcon.ShowBalloonTip(tipShowMilliseconds, tipTitle, tipContent, tipType);
+            }
+        }
+
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             UnSetShellHook();
@@ -226,23 +335,9 @@ namespace UbiGamesBackupToolX
                 {
                     case ShellEvents.HSHELL_WINDOWCREATED:
                         GetWindowText(lParam, createWT, createWT.Capacity);
-#if DEBUG
-                        ConsoleLogHelper.WriteLineInfo("窗体" + EncodingConvert.GetUtf8ByUnicodeString(createWT.ToString())+ "被创建");
-                        if (createWT.ToString().Equals("Ghost Recon® Wildlands"))
-                        {
-                            ConsoleLogHelper.WriteLineInfo("游戏幽灵行动启动");
-                        }
-                        else
-                        {
-
-                        }
-#endif
                         break;
                     case ShellEvents.HSHELL_WINDOWDESTROYED:
                         GetWindowText(lParam, createWT, createWT.Capacity);
-#if DEBUG
-                        ConsoleLogHelper.WriteLineInfo("窗体" + createWT.ToString() + "被销毁");
-#endif
                         break;
                 }
             }

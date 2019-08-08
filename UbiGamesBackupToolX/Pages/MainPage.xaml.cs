@@ -35,7 +35,7 @@ namespace UbiGamesBackupToolX.Pages
         }
         ToolMode toolMode = ToolMode.Backup;
         List<string> SelectGameList = new List<string>();
-        private UserInfo SelectUser { get; set; } = null;
+        public UserInfo SelectUser { get; set; } = null;
 
         private List<Game> GamePanelItemList;
 
