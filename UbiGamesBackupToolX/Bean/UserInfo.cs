@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace UbiGamesBackupToolX.Bean
 {
     [JsonObject(MemberSerialization.OptOut)]
-    class UserInfo: INotifyPropertyChanged
+    public class UserInfo: INotifyPropertyChanged
     {
         public string UID { get; set; }
         public string UNAME { get; set; }

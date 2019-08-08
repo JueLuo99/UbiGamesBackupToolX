@@ -11,6 +11,7 @@ using UbiGamesBackupToolX.Bean;
 
 namespace UbiGamesBackupToolX.Listener
 {
+    //已弃用
     class GameStatusListener
     {
         private const int MAX_PATH = 260;
