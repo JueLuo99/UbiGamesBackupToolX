@@ -44,7 +44,7 @@ namespace UbiGamesBackupToolX.Bean
         /// <summary>
         /// Config存储路径
         /// </summary>
-        public static string ConfigFilePath = System.AppDomain.CurrentDomain.BaseDirectory + System.IO.Path.DirectorySeparatorChar + "config.json";
+        public static string ConfigFilePath = System.AppDomain.CurrentDomain.BaseDirectory + "config.json";
 
         /// <summary>
         /// 是否开启自动备份
@@ -54,22 +54,11 @@ namespace UbiGamesBackupToolX.Bean
         /// 是否开启自动备份Get、Set
         /// </summary>
         public bool AllowBackup { get { return allowbackup; } set { allowbackup = value; } }
-        /// <summary>
-        /// 自动备份文件夹路径
-        /// 默认应为当前工作目录下AllowBackup文件夹
-        /// </summary>
-        private string allowbackuppath = System.AppDomain.CurrentDomain.BaseDirectory + Path.DirectorySeparatorChar + "AllowBackup";
+
         /// <summary>
         /// 自动备份路径GET、SET
         /// </summary>
-        public string AllowBackupPath
-        {
-            get { return allowbackuppath; }
-            set
-            {
-                allowbackuppath = value;
-            }
-        }
+        public string AllowBackupPath { get; set; } = AppDomain.CurrentDomain.BaseDirectory + "AllowBackup";
 
         //自动备份提示显示位置---------已弃用
         //private string allowbackupshowlocation = "TopLeft";

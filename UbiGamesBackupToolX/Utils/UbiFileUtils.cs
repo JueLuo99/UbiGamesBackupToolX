@@ -12,7 +12,7 @@ namespace UbiGamesBackupToolX.Utils
     {
         public static List<Game> SupportGameList = GetSupportGame();
         public static string USERINFOLOCATION = System.Environment.GetEnvironmentVariable("USERPROFILE") + "\\AppData\\Local\\Ubisoft Game Launcher\\users.dat";
-        public string USERSETTINGLOCATION = System.Environment.GetEnvironmentVariable("USERPROFILE") + "\\AppData\\Local\\Ubisoft Game Launcher\\settings.yml";
+        public static string USERSETTINGLOCATION = System.Environment.GetEnvironmentVariable("USERPROFILE") + "\\AppData\\Local\\Ubisoft Game Launcher\\settings.yml";
         public static string UPLAYINSTALLLOCATION { get; } = GetUplayPath().Split(new char[] { '"', })[1].Substring(0, GetUplayPath().LastIndexOf('\\'));
         public static string UPLAYSAVEGAME
         {
@@ -24,7 +24,7 @@ namespace UbiGamesBackupToolX.Utils
                 }
                 else
                 {
-                    return UPLAYINSTALLLOCATION + "\\savegames";
+                    return UPLAYINSTALLLOCATION + "savegames";
                 }
             }
         }
@@ -38,7 +38,7 @@ namespace UbiGamesBackupToolX.Utils
                 }
                 else
                 {
-                    return UPLAYINSTALLLOCATION + "\\cache\\avatars";
+                    return UPLAYINSTALLLOCATION + "cache\\avatars";
                 }
             }
         }
@@ -52,7 +52,7 @@ namespace UbiGamesBackupToolX.Utils
                 }
                 else
                 {
-                    return UPLAYINSTALLLOCATION + "\\cache\\assets";
+                    return UPLAYINSTALLLOCATION + "cache\\assets";
                 }
             }
         }
@@ -282,6 +282,79 @@ namespace UbiGamesBackupToolX.Utils
                 return SaveDirectorys;
             }
             return new string[0];
+        }
+
+        public static string GetNowLoginUserID()
+        {
+            if (File.Exists(USERSETTINGLOCATION))
+            {
+                using (Stream stream = new FileStream(USERSETTINGLOCATION, FileMode.Open))
+                {
+                    using (StreamReader reader = new StreamReader(stream))
+                    {
+                        string temp;
+                        while ((temp = reader.ReadLine()) != null)
+                        {
+                            if (temp == "user:")
+                            {
+                                while ((temp = reader.ReadLine()) != null)
+                                {
+                                    if (temp.Contains("password:"))
+                                    {
+                                        string usertemp = temp.Substring(temp.IndexOf("password:") + 9).Trim().Trim('"');
+                                        if (usertemp != "")
+                                        {
+                                            using (Stream userstream = new FileStream(USERINFOLOCATION, FileMode.Open))
+                                            {
+                                                using (StreamReader userreader = new StreamReader(userstream))
+                                                {
+                                                    string[] userinfos = userreader.ReadToEnd().Split('$');
+                                                    foreach (string userinfo in userinfos)
+                                                    {
+                                                        if (userinfo.Contains(usertemp))
+                                                        {
+                                                            //int uidstart = content.IndexOf('$', pos) + 1;
+                                                            int uidend = userinfo.IndexOf('*');
+                                                            string uid = userinfo.Substring(0, uidend);
+                                                            return uid;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        return null;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return null;
+        }
+        public static string GetUserNameforUID(string UID)
+        {
+            if (File.Exists(USERINFOLOCATION))
+            {
+                using (Stream userstream = new FileStream(USERINFOLOCATION, FileMode.Open))
+                {
+                    using (StreamReader userreader = new StreamReader(userstream))
+                    {
+                        string[] userinfos = userreader.ReadToEnd().Split('$');
+                        foreach (string userinfo in userinfos)
+                        {
+                            if (userinfo.Contains(UID))
+                            {
+                                int uidend = userinfo.IndexOf('*');
+                                int unamestart = userinfo.IndexOf("=2", uidend) + 3;
+                                int unameend = userinfo.IndexOf(':', unamestart);
+                                return userinfo.Substring(unamestart, unameend - unamestart);
+                            }
+                        }
+                    }
+                }
+            }
+            return null;
         }
     }
 }
