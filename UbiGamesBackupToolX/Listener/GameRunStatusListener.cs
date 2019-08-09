@@ -7,7 +7,7 @@ using UbiGamesBackupToolX.Bean;
 
 namespace UbiGamesBackupToolX.Listener
 {
-    class GameRunStatusListener
+    public class GameRunStatusListener
     {
         public delegate void GameEventHandler(GameEventArgs gameEventArgs);
         public GameEventHandler RunGameEvent = null;
@@ -98,6 +98,32 @@ namespace UbiGamesBackupToolX.Listener
                             RunGameList.Remove(gg);
                         }
                     }
+                }
+            }
+        }
+        public void RefreshGameList()
+        {
+            string path = System.AppDomain.CurrentDomain.BaseDirectory + Path.DirectorySeparatorChar + "ListenerGameList.json";
+            using (Stream stream = new FileStream(path, FileMode.OpenOrCreate))
+            {
+                using (StreamReader reader = new StreamReader(stream))
+                {
+
+                    List<Game> Temp = JsonConvert.DeserializeObject<List<Game>>(reader.ReadToEnd());
+                    for (int i = 0; i < RunGameList.Count; i++)
+                    {
+                        Game g = (Game)RunGameList[i];
+                        if (Temp.Contains(g))
+                        {
+                            Temp.Remove(g);
+                        }
+                        else
+                        {
+                            RunGameList.Remove(g);
+                            i--;
+                        }
+                    }
+                    UnRunGameList = Temp;
                 }
             }
         }
