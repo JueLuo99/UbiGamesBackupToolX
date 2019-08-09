@@ -35,34 +35,52 @@ namespace UbiGamesBackupToolX.Pages
             System.Windows.Controls.CheckBox checkBox = sender as System.Windows.Controls.CheckBox;
             if (checkBox.IsChecked == true)
             {
-                AllowBackupPathTextBox.IsEnabled = true;
-                AllowBackupPathChooseBtn.IsEnabled = true;
-                AddListenerGameBtn.IsEnabled = true;
-                RunGameTipStatusCkb.IsEnabled = true;
-                ExitGameTipStatusCkb.IsEnabled = true;
-
-                //gameStatusListener.restart();
-                //TODO 重启监听
+                settingPage.mainWindow.SetShellHook();
             }
             else
             {
-                AllowBackupPathTextBox.IsEnabled = false;
-                AllowBackupPathChooseBtn.IsEnabled = false;
-                AddListenerGameBtn.IsEnabled = false;
-                RunGameTipStatusCkb.IsEnabled = false;
-                ExitGameTipStatusCkb.IsEnabled = false;
-
-                //gameStatusListener.stop();
-                //TODO 停止监听
+                settingPage.mainWindow.UnSetShellHook();
             }
             Config.Instance.AllowBackup = checkBox.IsChecked.Value;
+            AllowBackupPathTextBox.IsEnabled = Config.Instance.AllowBackup;
+            AllowBackupPathChooseBtn.IsEnabled = Config.Instance.AllowBackup;
+            AddListenerGameBtn.IsEnabled = Config.Instance.AllowBackup;
+            RunGameTipStatusCkb.IsEnabled = Config.Instance.AllowBackup;
+            ExitGameTipStatusCkb.IsEnabled = Config.Instance.AllowBackup;
             Config.Instance.Save();
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             AllowBackupCkb.IsChecked = Config.Instance.AllowBackup;
-            AllowBackupPathTextBox.Text = Config.Instance.AllowBackupPath;
+            if (File.Exists(Config.Instance.AllowBackupPath))
+            {
+                AllowBackupPathTextBox.Text = Config.Instance.AllowBackupPath;
+            }
+            else
+            {
+                if (!File.Exists(Config.Instance.DefaultAllowBackup))
+                {
+                    try
+                    {
+                        Directory.CreateDirectory(Config.Instance.AllowBackupPath);
+                    }
+                    catch(Exception ex)
+                    {
+                        System.Windows.Forms.MessageBox.Show(ex.Message, "警告", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+
+                }
+                AllowBackupPathTextBox.Text = Config.Instance.DefaultAllowBackup;
+                Config.Instance.AllowBackupPath = Config.Instance.DefaultAllowBackup;
+                Config.Instance.Save();
+                
+            }
+            AllowBackupPathTextBox.IsEnabled = Config.Instance.AllowBackup;
+            AllowBackupPathChooseBtn.IsEnabled = Config.Instance.AllowBackup;
+            AddListenerGameBtn.IsEnabled = Config.Instance.AllowBackup;
+            RunGameTipStatusCkb.IsEnabled = Config.Instance.AllowBackup;
+            ExitGameTipStatusCkb.IsEnabled = Config.Instance.AllowBackup;
         }
 
         private void AllowBackupChoosePathBtn_OnClicked(object sender, RoutedEventArgs e)
@@ -87,6 +105,7 @@ namespace UbiGamesBackupToolX.Pages
             {
                 System.Windows.Forms.MessageBox.Show("文件夹不存在，请重新输入!", "警告", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
+            //TODO 初始化AllowBack文件夹
         }
 
         private void AddListenerGameBtn_OnClicked(object sender, RoutedEventArgs e)
@@ -97,8 +116,7 @@ namespace UbiGamesBackupToolX.Pages
             };
             chooseGameWindow.ShowDialog();
             GC.Collect();
-            //gameStatusListener.restart();
-            //TODO 此处刷新监听列表
+            settingPage.mainWindow.gameRunStatusListener.RefreshGameList();
         }
 
         private void ExitGameTipStatusCkb_Checked(object sender, RoutedEventArgs e)

@@ -30,5 +30,10 @@ namespace UbiGamesBackupToolX.Pages
         {
             System.Diagnostics.Process.Start("https://jq.qq.com/?_wv=1027&k=50pui0f");
         }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.ToolVersion.Text = "当前版本：" + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
+        }
     }
 }

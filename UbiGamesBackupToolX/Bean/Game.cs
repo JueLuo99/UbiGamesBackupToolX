@@ -9,7 +9,7 @@ using Newtonsoft.Json;
 namespace UbiGamesBackupToolX.Bean
 {
     [JsonObject(MemberSerialization.OptOut)]
-    class Game: INotifyPropertyChanged
+    public class Game: INotifyPropertyChanged
     {
         public string id { get; set; }
         public string name { get; set; }

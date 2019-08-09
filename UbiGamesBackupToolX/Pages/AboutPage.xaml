@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:UbiGamesBackupToolX.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="AboutPage">
+      Title="AboutPage" Loaded="Page_Loaded">
     <DockPanel Margin="15,0,0,0">
         <WrapPanel Orientation="Vertical">
             <Label FontSize="16" Margin="0,10,0,0">关于UbiGamesBackupTool</Label>

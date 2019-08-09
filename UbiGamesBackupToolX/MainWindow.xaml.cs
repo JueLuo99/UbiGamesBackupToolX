@@ -55,7 +55,7 @@ namespace UbiGamesBackupToolX
 
 
         NotifyIcon notifyIcon;
-        GameRunStatusListener gameRunStatusListener;
+        public GameRunStatusListener gameRunStatusListener;
 
         /// <summary>
         /// 用以存储Hook到的被创建窗体名称
@@ -90,8 +90,8 @@ namespace UbiGamesBackupToolX
         }
         uint WM_ShellHook;
 
-        MainPage mainPage = null;
-        SettingPage settingPage = null;
+        public MainPage mainPage = null;
+        public SettingPage settingPage = null;
         public MainWindow()
         {
             InitializeComponent();
@@ -126,12 +126,10 @@ namespace UbiGamesBackupToolX
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             showMainPage();
-            //if (Config.Instance.AllowBackup)
-            //{
-            //    SetShellHook();
-            //}
-            //TODO 托盘图标等相关 主页面初始化优化
-            SetShellHook();
+            if (Config.Instance.AllowBackup)
+            {
+                SetShellHook();
+            }
             gameRunStatusListener = new GameRunStatusListener();
             gameRunStatusListener.RunGameEvent += new GameRunStatusListener.GameEventHandler(this.RunGameCallback);
             gameRunStatusListener.ExitGameEvent += new GameRunStatusListener.GameEventHandler(this.ExitGameCallback);

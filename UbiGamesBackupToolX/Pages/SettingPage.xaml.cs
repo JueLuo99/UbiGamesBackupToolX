@@ -45,8 +45,7 @@ namespace UbiGamesBackupToolX.Pages
 
         private void Settingokbtn_Click(object sender, RoutedEventArgs e)
         {
-            mainWindow.PageBox.GoBack();
-
+            mainWindow.PageBox.Content = mainWindow.mainPage;
         }
 
         private void AllSetting_Click(object sender, RoutedEventArgs e)

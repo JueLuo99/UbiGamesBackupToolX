@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace UbiGamesBackupToolX.Bean
 {
-    [JsonObject(MemberSerialization.OptIn)]
+    [JsonObject(MemberSerialization.OptOut)]
     class Config
     {
         private static Config _instance;
@@ -56,9 +56,14 @@ namespace UbiGamesBackupToolX.Bean
         public bool AllowBackup { get { return allowbackup; } set { allowbackup = value; } }
 
         /// <summary>
+        /// 默认实时备份路径
+        /// </summary>
+        [JsonIgnore]
+        public string DefaultAllowBackup { get; } = AppDomain.CurrentDomain.BaseDirectory + "AllowBackup";
+        /// <summary>
         /// 自动备份路径GET、SET
         /// </summary>
-        public string AllowBackupPath { get; set; } = AppDomain.CurrentDomain.BaseDirectory + "AllowBackup";
+        public string AllowBackupPath { get; set; }
 
         //自动备份提示显示位置---------已弃用
         //private string allowbackupshowlocation = "TopLeft";
