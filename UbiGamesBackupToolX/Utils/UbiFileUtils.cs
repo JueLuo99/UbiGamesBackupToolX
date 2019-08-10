@@ -203,7 +203,6 @@ namespace UbiGamesBackupToolX.Utils
                             user.UNAME = username;
                             user.USERSAVEGAME = UPLAYSAVEGAME + System.IO.Path.DirectorySeparatorChar + uid;
                             string imgpath = USERICONLOCATION + "\\" + uid + "_64.png";
-                            Console.WriteLine(imgpath);
                             if (File.Exists(imgpath))
                             {
                                 user.USERIMAGE = imgpath;

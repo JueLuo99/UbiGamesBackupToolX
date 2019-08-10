@@ -32,16 +32,16 @@ namespace UbiGamesBackupToolX.Pages
 
         private void AllowBackupSettingCheckBox_OnChecked(object sender, RoutedEventArgs e)
         {
-            System.Windows.Controls.CheckBox checkBox = sender as System.Windows.Controls.CheckBox;
-            if (checkBox.IsChecked == true)
+            if (AllowBackupCkb.IsChecked??false)
             {
                 settingPage.mainWindow.SetShellHook();
+                Config.Instance.AllowBackup = true;
             }
             else
             {
+                Config.Instance.AllowBackup = false;
                 settingPage.mainWindow.UnSetShellHook();
             }
-            Config.Instance.AllowBackup = checkBox.IsChecked.Value;
             AllowBackupPathTextBox.IsEnabled = Config.Instance.AllowBackup;
             AllowBackupPathChooseBtn.IsEnabled = Config.Instance.AllowBackup;
             AddListenerGameBtn.IsEnabled = Config.Instance.AllowBackup;
@@ -63,7 +63,7 @@ namespace UbiGamesBackupToolX.Pages
                 {
                     try
                     {
-                        Directory.CreateDirectory(Config.Instance.AllowBackupPath);
+                        Directory.CreateDirectory(Config.Instance.DefaultAllowBackup);
                     }
                     catch(Exception ex)
                     {
@@ -74,8 +74,10 @@ namespace UbiGamesBackupToolX.Pages
                 AllowBackupPathTextBox.Text = Config.Instance.DefaultAllowBackup;
                 Config.Instance.AllowBackupPath = Config.Instance.DefaultAllowBackup;
                 Config.Instance.Save();
-                
             }
+            RunGameTipStatusCkb.IsChecked = Config.Instance.RunGameTipStatus;
+            ExitGameTipStatusCkb.IsChecked = Config.Instance.ExitGameTipStatus;
+
             AllowBackupPathTextBox.IsEnabled = Config.Instance.AllowBackup;
             AllowBackupPathChooseBtn.IsEnabled = Config.Instance.AllowBackup;
             AddListenerGameBtn.IsEnabled = Config.Instance.AllowBackup;
@@ -105,7 +107,6 @@ namespace UbiGamesBackupToolX.Pages
             {
                 System.Windows.Forms.MessageBox.Show("文件夹不存在，请重新输入!", "警告", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-            //TODO 初始化AllowBack文件夹
         }
 
         private void AddListenerGameBtn_OnClicked(object sender, RoutedEventArgs e)
@@ -121,8 +122,7 @@ namespace UbiGamesBackupToolX.Pages
 
         private void ExitGameTipStatusCkb_Checked(object sender, RoutedEventArgs e)
         {
-            System.Windows.Controls.CheckBox checkBox = sender as System.Windows.Controls.CheckBox;
-            if (checkBox.IsChecked == true)
+            if (ExitGameTipStatusCkb.IsChecked??false)
             {
                 Config.Instance.ExitGameTipStatus = true;
             }
@@ -134,8 +134,7 @@ namespace UbiGamesBackupToolX.Pages
         }
         private void RunGameTipStatusCkb_Checked(object sender, RoutedEventArgs e)
         {
-            System.Windows.Controls.CheckBox checkBox = sender as System.Windows.Controls.CheckBox;
-            if (checkBox.IsChecked == true)
+            if (RunGameTipStatusCkb.IsChecked??false)
             {
                 Config.Instance.RunGameTipStatus = true;
             }

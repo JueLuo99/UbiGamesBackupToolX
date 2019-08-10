@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -61,16 +62,15 @@ namespace UbiGamesBackupToolX
 
         private void OKBtn_Click(object sender, RoutedEventArgs e)
         {
-            using (Stream stream = new FileStream(System.AppDomain.CurrentDomain.BaseDirectory + System.IO.Path.DirectorySeparatorChar + "ListenerGameList.json", FileMode.Create))
-            {
-                using (StreamWriter writer = new StreamWriter(stream))
-                {
-                    writer.WriteLine(JsonConvert.SerializeObject(SelectGameList));
-                    writer.Flush();
-                    writer.Close();
-                    stream.Close();
-                }
-            }
+            //using (Stream stream = new FileStream(System.AppDomain.CurrentDomain.BaseDirectory + "ListenerGameList.json", FileMode.Create))
+            //{
+            //    using (StreamWriter writer = new StreamWriter(stream))
+            //    {
+            //        writer.WriteLine(JsonConvert.SerializeObject(SelectGameList));
+            //        writer.Flush();
+            //    }
+            //}
+            File.WriteAllText(System.AppDomain.CurrentDomain.BaseDirectory + "ListenerGameList.json", JsonConvert.SerializeObject(SelectGameList), Encoding.Unicode);
             SelectGameList.Clear();
             Close();
         }
@@ -84,7 +84,7 @@ namespace UbiGamesBackupToolX
         private List<Game> GetHavedGameList()
         {
             List<Game> HavedGamelist;
-            string path = System.AppDomain.CurrentDomain.BaseDirectory + System.IO.Path.DirectorySeparatorChar + "ListenerGameList.json";
+            string path = System.AppDomain.CurrentDomain.BaseDirectory + "ListenerGameList.json";
             using (Stream stream = new FileStream(path, FileMode.OpenOrCreate))
             {
                 using (StreamReader reader = new StreamReader(stream))
@@ -98,6 +98,18 @@ namespace UbiGamesBackupToolX
                 }
             }
             return new List<Game>();
+        }
+
+        private void GameNameFilterTb_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (GameNameFilterTb.Text == "")
+            {
+                GameListView.ItemsSource = gamelist;
+            }
+            else
+            {
+                GameListView.ItemsSource = (from game in gamelist where game.name.Contains(GameNameFilterTb.Text) select game).ToList();
+            }
         }
     }
 }

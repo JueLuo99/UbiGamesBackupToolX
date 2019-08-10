@@ -31,13 +31,13 @@ namespace UbiGamesBackupToolX.Pages
 
         private void ShortcutButton_Clicked(object sender, RoutedEventArgs e)
         {
-            ShortcutCreator.CreateShortcutOnDesktop("UbiGamesBackupTool", this.GetType().Assembly.Location);
+            ShortcutCreator.CreateShortcutOnDesktop("UbiGamesBackupToolX", this.GetType().Assembly.Location);
         }
 
         private void powerCkb_Checked(object sender, RoutedEventArgs e)
         {
             System.Windows.Controls.CheckBox checkBox = sender as System.Windows.Controls.CheckBox;
-            if (checkBox.IsChecked == true)
+            if (checkBox.IsChecked??false)
             {
                 try
                 {
@@ -55,7 +55,7 @@ namespace UbiGamesBackupToolX.Pages
                     ex.ToString();
                 }
             }
-            else if (checkBox.IsChecked == false)
+            else
             {
                 try
                 {
@@ -69,6 +69,19 @@ namespace UbiGamesBackupToolX.Pages
                 catch (Exception ex)
                 {
                     ex.ToString();
+                }
+            }
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            RegistryKey RKey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run");
+            string[] keynames = RKey.GetValueNames();
+            foreach (string keyname in keynames)
+            {
+                if (keyname == "UbiGamesBackupToolX")
+                {
+                    powerCkb.IsChecked = true;
                 }
             }
         }

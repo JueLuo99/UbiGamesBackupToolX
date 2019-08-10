@@ -10,7 +10,7 @@
     <WrapPanel 
         Orientation="Vertical" Margin="15,0,0,0">
         <Label FontSize="16" Content="实时备份设置(Uplay登陆时请勾选“记住我”)"/>
-        <CheckBox x:Name="AllowBackupCkb" Content="开启实时备份" Margin="0,10,0,5" Checked="AllowBackupSettingCheckBox_OnChecked"/>
+        <CheckBox x:Name="AllowBackupCkb" Content="开启实时备份" Margin="0,10,0,5" Checked="AllowBackupSettingCheckBox_OnChecked" Unchecked="AllowBackupSettingCheckBox_OnChecked"/>
         <Label FontSize="14" Content="备份路径" Margin="0,5,0,0"/>
         <WrapPanel Margin="0,0,0,5">
             <TextBox x:Name="AllowBackupPathTextBox"  VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Disabled" TextChanged="AllowBackupPathTextBox_TextChanged"/>
@@ -19,7 +19,7 @@
         <Label FontSize="14" Content="备份游戏" Margin="0,5,0,0"/>
         <Button x:Name="AddListenerGameBtn" Content="查看或添加游戏" Click="AddListenerGameBtn_OnClicked"/>
         <Label FontSize="14" Content="游戏启动时显示在" Visibility="Collapsed" />
-        <CheckBox x:Name="RunGameTipStatusCkb" FontSize="12" Margin="0,4" Checked="RunGameTipStatusCkb_Checked">游戏启动时是否显示提示</CheckBox>
-        <CheckBox x:Name="ExitGameTipStatusCkb" FontSize="12" Margin="0,4" Checked="ExitGameTipStatusCkb_Checked">游戏关闭时是否显示提示</CheckBox>
+        <CheckBox x:Name="RunGameTipStatusCkb" FontSize="12" Margin="0,4" Checked="RunGameTipStatusCkb_Checked" Unchecked="RunGameTipStatusCkb_Checked">游戏启动时是否显示提示</CheckBox>
+        <CheckBox x:Name="ExitGameTipStatusCkb" FontSize="12" Margin="0,4" Checked="ExitGameTipStatusCkb_Checked" Unchecked="ExitGameTipStatusCkb_Checked">游戏关闭时是否显示提示</CheckBox>
     </WrapPanel>
 </Page>

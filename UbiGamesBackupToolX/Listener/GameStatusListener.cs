@@ -43,21 +43,12 @@ namespace UbiGamesBackupToolX.Listener
 
         public GameStatusListener()
         {
-            Console.WriteLine("监听器初始化......");
             string path = System.AppDomain.CurrentDomain.BaseDirectory + Path.DirectorySeparatorChar + "ListenerGameList.json";
             using (Stream stream = new FileStream(path, FileMode.OpenOrCreate))
             {
                 using (StreamReader reader = new StreamReader(stream))
                 {
                     String listenerJson = reader.ReadToEnd();
-                    Console.WriteLine(listenerJson);
-                    //Encoding defaultEncoding = Encoding.Default;
-                    //Encoding windows1252 = Encoding.GetEncoding(1252);
-                    ////Console.WriteLine("编码方式：" + defaultEncoding.WindowsCodePage);
-                    //Encoding utf8 = Encoding.UTF8;
-                    //byte[] utf8s = utf8.GetBytes(listenerJson);
-                    ////Console.WriteLine(defaultEncoding.GetString(Encoding.Convert(defaultEncoding, utf8, utf8s)));
-                    //Console.WriteLine(windows1252.GetString(Encoding.Convert(windows1252, utf8, utf8s)));
                     UnRunGameList = JsonConvert.DeserializeObject<List<Game>>(listenerJson);
                     //如果待监听列表为空，不进行监听
                     if (UnRunGameList == null)
@@ -79,14 +70,10 @@ namespace UbiGamesBackupToolX.Listener
         /// </summary>
         public void run()
         {
-            Console.WriteLine("监听器运行......");
             int i = 0;
             while (isrun)
             {
                 i++;
-                Console.WriteLine("监听器监听第" + i + "次");
-                //IntPtr windowHandle = FindWindow(null, "Assassin's Creed Origins");
-
                 //启动
                 for (int pos = 0; pos < UnRunGameList.Count; pos++)
                 {
@@ -95,7 +82,6 @@ namespace UbiGamesBackupToolX.Listener
                     List<Game> gamelist = (from game in UnRunGameList
                                            where game.Title == g.Title
                                            select game).ToList();
-                    Console.WriteLine(g.Title);
                     if ((title = FindWindow(null, g.Title)) != IntPtr.Zero)
                     {
                         GameEventArgs gameEvent = new GameEventArgs(gamelist, title);
@@ -138,10 +124,8 @@ namespace UbiGamesBackupToolX.Listener
         /// </summary>
         public void restart()
         {
-            Console.WriteLine("监听器停止......");
             isrun = false;
             stop();
-            Console.WriteLine("监听器初始化......");
             string path = System.AppDomain.CurrentDomain.BaseDirectory + Path.DirectorySeparatorChar + "ListenerGameList.json";
             using (Stream stream = new FileStream(path, FileMode.OpenOrCreate))
             {
@@ -171,7 +155,6 @@ namespace UbiGamesBackupToolX.Listener
         {
             if (thread != null)
             {
-                Console.WriteLine("监听器停止......");
                 isrun = false;
                 thread.Abort();
             }

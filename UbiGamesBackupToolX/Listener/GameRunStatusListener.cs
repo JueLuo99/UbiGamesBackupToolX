@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using UbiGamesBackupToolX.Bean;
 
 namespace UbiGamesBackupToolX.Listener
@@ -21,19 +22,12 @@ namespace UbiGamesBackupToolX.Listener
 
         public GameRunStatusListener()
         {
-            string path = System.AppDomain.CurrentDomain.BaseDirectory + Path.DirectorySeparatorChar + "ListenerGameList.json";
+            string path = System.AppDomain.CurrentDomain.BaseDirectory + "ListenerGameList.json";
             using (Stream stream = new FileStream(path, FileMode.OpenOrCreate))
             {
-                using (StreamReader reader = new StreamReader(stream))
+                using (StreamReader reader = new StreamReader(stream,Encoding.Unicode))
                 {
                     String listenerJson = reader.ReadToEnd();
-                    //Encoding defaultEncoding = Encoding.Default;
-                    //Encoding windows1252 = Encoding.GetEncoding(1252);
-                    ////Console.WriteLine("编码方式：" + defaultEncoding.WindowsCodePage);
-                    //Encoding utf8 = Encoding.UTF8;
-                    //byte[] utf8s = utf8.GetBytes(listenerJson);
-                    ////Console.WriteLine(defaultEncoding.GetString(Encoding.Convert(defaultEncoding, utf8, utf8s)));
-                    //Console.WriteLine(windows1252.GetString(Encoding.Convert(windows1252, utf8, utf8s)));
                     UnRunGameList = JsonConvert.DeserializeObject<List<Game>>(listenerJson);
                     //如果待监听列表为空，不进行监听
                     if (UnRunGameList == null)
@@ -51,6 +45,7 @@ namespace UbiGamesBackupToolX.Listener
                 List<Game> gamelist = (from game in UnRunGameList
                                        where game.Title.Equals(name)
                                        select game).ToList();
+                
                 if (gamelist.Count > 0)
                 {
                     GameEventArgs gameEvent = new GameEventArgs()

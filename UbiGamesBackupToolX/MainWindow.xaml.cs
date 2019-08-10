@@ -148,22 +148,12 @@ namespace UbiGamesBackupToolX
         }
         private void ExitGameCallback(GameRunStatusListener.GameEventArgs gameEventArgs)
         {
-            //游戏退出
-            foreach (Game g in gameEventArgs.game)
-            {
-                Console.WriteLine("游戏   " + g.name + "   已退出...");
-            }
             Action<string, List<Game>> action = new Action<string, List<Game>>(ShowExitGameTip);
             this.Dispatcher.BeginInvoke(action, gameEventArgs.game[0].Title, gameEventArgs.game);
         }
 
         private void RunGameCallback(GameRunStatusListener.GameEventArgs gameEventArgs)
         {
-            //游戏启动
-            foreach (Game g in gameEventArgs.game)
-            {
-                Console.WriteLine("游戏   " + g.name + "   已启动...");
-            }
             Action<string> action = new Action<string>(ShowRunGameTip);
             this.Dispatcher.BeginInvoke(action, gameEventArgs.game[0].Title);
         }
@@ -333,9 +323,19 @@ namespace UbiGamesBackupToolX
                 {
                     case ShellEvents.HSHELL_WINDOWCREATED:
                         GetWindowText(lParam, createWT, createWT.Capacity);
+                        string name = createWT.ToString();
+                        if(name!=""&&name!=" ")
+                        {
+                            gameRunStatusListener.GameRunning(createWT.ToString());
+                        }
                         break;
                     case ShellEvents.HSHELL_WINDOWDESTROYED:
                         GetWindowText(lParam, createWT, createWT.Capacity);
+                        string exitname = createWT.ToString();
+                        if (exitname != "" && exitname != " ")
+                        {
+                            gameRunStatusListener.GameExit(createWT.ToString());
+                        }
                         break;
                 }
             }

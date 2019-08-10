@@ -15,6 +15,7 @@
     <DockPanel>
         <DockPanel x:Name="TitlePanel" DockPanel.Dock="Top"  MouseLeftButtonDown="TitlePanel_MouseLeftButtonDown" MouseLeftButtonUp="TitlePanel_MouseLeftButtonUp" MouseMove="TitlePanel_MouseMove" Background="#CCE2E2E2">
             <Image Width="32" Height="32" Source="Resources/UbiGameBackupToolICO.ico"/>
+            <Label Content="UbiGamesBackupToolX" Height="32" VerticalContentAlignment="Center"/>
             <Button x:Name="CloseBtn" Width="32" Height="32" HorizontalAlignment="Right" VerticalAlignment="Top" DockPanel.Dock="Right" Click="CloseBtn_Click">
                 <Button.Background>
                     <ImageBrush ImageSource="Resources/close.png"/>

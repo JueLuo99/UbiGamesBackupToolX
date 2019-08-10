@@ -15,9 +15,28 @@
                 </Button.Background>
             </Button>
         </DockPanel>
+        <TextBox x:Name="GameNameFilterTb" DockPanel.Dock="Top" TextChanged="GameNameFilterTb_TextChanged">
+            <TextBox.Resources>
+                <VisualBrush x:Key="HintText" TileMode="None" Opacity="0.5" Stretch="None" AlignmentX="Left">
+                    <VisualBrush.Visual>
+                        <TextBlock FontStyle="Italic" Text="输入游戏名称搜索（仅支持英文）"/>
+                    </VisualBrush.Visual>
+                </VisualBrush>
+                <Style TargetType="TextBox">
+                    <Style.Triggers>
+                        <Trigger Property="Text" Value="{x:Null}">
+                            <Setter Property="Background" Value="{StaticResource HintText}"/>
+                        </Trigger>
+                        <Trigger Property="Text" Value="">
+                            <Setter Property="Background" Value="{StaticResource HintText}"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBox.Resources>
+        </TextBox>
         <DockPanel DockPanel.Dock="Bottom" LastChildFill="False" Margin="5,5,10,5">
-            <Button Content="取消" Margin="10,0,0,0" DockPanel.Dock="Right" Height="34" Width="100" Click="OKBtn_Click"/>
-            <Button Content="确定" DockPanel.Dock="Right"  Height="34" Width="100" Click="CancelBtn_Click"/>
+            <Button Content="取消" Margin="10,0,0,0" DockPanel.Dock="Right" Height="34" Width="100" Click="CancelBtn_Click"/>
+            <Button Content="确定" DockPanel.Dock="Right"  Height="34" Width="100" Click="OKBtn_Click"/>
         </DockPanel>
         <ScrollViewer VerticalScrollBarVisibility="Auto" Style="{DynamicResource for_scrollviewer}" HorizontalScrollBarVisibility="Disabled">
             <ItemsControl  x:Name="GameListView" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True">
