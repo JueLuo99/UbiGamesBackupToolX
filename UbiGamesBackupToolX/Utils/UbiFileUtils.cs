@@ -57,6 +57,9 @@ namespace UbiGamesBackupToolX.Utils
             }
         }
 
+        public const string GAMEICON = "Resources/gameicon/";
+        public const string DEFAULTGAMEICON = "../Resources/gamepanelbackground.png";
+
         /// <summary>
         /// 获取Uplay路径
         /// </summary>
@@ -241,10 +244,15 @@ namespace UbiGamesBackupToolX.Utils
                     {
                         if (g.id.Equals(id))
                         {
-                            string imgpath = GAMELOGOCACHE+"\\" + g.img;
-                            if (File.Exists(imgpath))
+                            //string imgpath = GAMELOGOCACHE+"\\" + g.img;
+                            //if (File.Exists(imgpath))
+                            //{
+                            //    g.imgpath = imgpath;
+                            //}
+                            g.imgpath = GAMEICON + g.gameicon;
+                            if(g.gameicon.Trim()!="")
                             {
-                                g.imgpath = imgpath;
+                                g.imgpath = GAMEICON + g.gameicon;
                             }
                             Ugamelist.Add(g);
                             break;

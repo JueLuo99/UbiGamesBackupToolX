@@ -9,7 +9,7 @@ using Newtonsoft.Json;
 namespace UbiGamesBackupToolX.Bean
 {
     [JsonObject(MemberSerialization.OptOut)]
-    public class Game: INotifyPropertyChanged
+    public class Game : INotifyPropertyChanged
     {
         public string id { get; set; }
         public string name { get; set; }
@@ -18,6 +18,7 @@ namespace UbiGamesBackupToolX.Bean
         public string Title { get; set; }
         public string AppName { get; set; }
         public string imgpath { get; set; } = "../Resources/gamepanelbackground.png";
+        public string gameicon {get;set;}
 
         private bool _selected = false;
         [JsonIgnore]
