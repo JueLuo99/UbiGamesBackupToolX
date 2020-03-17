@@ -192,16 +192,16 @@ namespace UbiGamesBackupToolX.Utils
                         string content = reader.ReadToEnd();
                         int UserCount = 0;
                         int pos = 0;
-                        while ((pos = content.IndexOf("�", pos + 1)) != -1)
+                        while ((pos = content.IndexOf("�\u0003", pos + 1)) != -1)
                         {
                             UserCount++;
                             UserInfo user = new UserInfo();
                             int uidstart = content.IndexOf('$', pos) + 1;
-                            int uidend = content.IndexOf("2\u0007", uidstart);
+                            int uidend = content.IndexOf("2\a", uidstart);
                             string uid = content.Substring(uidstart, uidend - uidstart);
-                            int unamestart = uidend+1;
+                            int unamestart = uidend + 2;
                             int unameend = content.IndexOf(':', unamestart);
-                            string username = content.Substring(uidend+1, unameend - unamestart);
+                            string username = content.Substring(unamestart, unameend - unamestart);
                             user.UID = uid;
                             user.UNAME = username;
                             user.USERSAVEGAME = UPLAYSAVEGAME + System.IO.Path.DirectorySeparatorChar + uid;
