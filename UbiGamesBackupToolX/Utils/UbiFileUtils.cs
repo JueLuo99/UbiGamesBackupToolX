@@ -197,7 +197,7 @@ namespace UbiGamesBackupToolX.Utils
                             UserCount++;
                             UserInfo user = new UserInfo();
                             int uidstart = content.IndexOf('$', pos) + 1;
-                            int uidend = content.IndexOf("2\a", uidstart);
+                            int uidend = uidstart + 36;
                             string uid = content.Substring(uidstart, uidend - uidstart);
                             int unamestart = uidend + 2;
                             int unameend = content.IndexOf(':', unamestart);
