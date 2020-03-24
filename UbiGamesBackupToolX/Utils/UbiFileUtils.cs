@@ -249,7 +249,8 @@ namespace UbiGamesBackupToolX.Utils
                             //{
                             //    g.imgpath = imgpath;
                             //}
-                            g.imgpath = GAMEICON + g.gameicon;
+
+                            // 上方为使用Uplay缓存图片 已弃用
                             if(g.gameicon.Trim()!="")
                             {
                                 g.imgpath = GAMEICON + g.gameicon;
