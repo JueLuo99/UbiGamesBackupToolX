@@ -1,5 +1,7 @@
 # UbiGamesBackupToolX
 
+![](https://i.loli.net/2020/07/25/G5pnR3w9cWxeBMK.png)
+
 ## 适用群体
 - 需要备份不支持 Uplay 云存档的单机游戏的玩家（如：《刺客信条：黑旗》《细胞分裂：黑名单》等）
 - 无法正常通过 Uplay 云存档备份存档的玩家
