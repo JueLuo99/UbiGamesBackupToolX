@@ -19,7 +19,7 @@ namespace UbiGamesBackupToolX.Properties {
     // 类通过类似于 ResGen 或 Visual Studio 的工具自动生成的。
     // 若要添加或移除成员，请编辑 .ResX 文件，然后重新运行 ResGen
     // (以 /str 作为命令选项)，或重新生成 VS 项目。
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -47,8 +47,8 @@ namespace UbiGamesBackupToolX.Properties {
         }
         
         /// <summary>
-        ///   重写当前线程的 CurrentUICulture 属性
-        ///   重写当前线程的 CurrentUICulture 属性。
+        ///   重写当前线程的 CurrentUICulture 属性，对
+        ///   使用此强类型资源类的所有资源查找执行重写。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
         internal static global::System.Globalization.CultureInfo Culture {
@@ -106,9 +106,10 @@ namespace UbiGamesBackupToolX.Properties {
         ///    &quot;id&quot;: 2,
         ///    &quot;name&quot;: &quot;Tom Clancy&apos;s Splinter Cell Conviction&quot;,
         ///    &quot;Version&quot;: &quot;Uplay/Steam&quot;,
-        ///    &quot;img&quot;: &quot;&quot;,
+        ///    &quot;img&quot;: &quot;7c50f4211b2ad736ce0f3ea84533da8c.png&quot;,
         ///    &quot;Title&quot;: &quot;Tom Clancy&apos;s Splinter Cell Conviction&quot;,
-        ///    &quot;AppName&quot;: &quot;&quot;
+        ///    &quot;AppName&quot;: &quot;&quot;,
+        ///    &quot;gameicon&quot;: &quot;Tom Clancy&apos;s Splinter Cell Conviction™ Deluxe Edition.jpg&quot;
         ///  },
         ///  {
         ///    &quot;id&quot;: 3,
@@ -116,14 +117,8 @@ namespace UbiGamesBackupToolX.Properties {
         ///    &quot;Version&quot;: &quot;Uplay&quot;,
         ///    &quot;img&quot;: &quot;&quot;,
         ///    &quot;Title&quot;: &quot;Silent Hunter 5&quot;,
-        ///    &quot;AppName&quot;: &quot;&quot;
-        ///  },
-        ///  {
-        ///    &quot;id&quot;: 4,
-        ///    &quot;name&quot;: &quot;Assassin&apos;s Creed II Deluxe Edition&quot;,
-        ///    &quot;Version&quot;: &quot;Uplay/Steam&quot;,
-        ///    &quot;img&quot;: &quot;63dc715bf7eff988d902f78170c231a8.png&quot;,
-        ///    &quot;T [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        ///    &quot;AppName&quot;: &quot;&quot;,
+        ///    &quot;gameicon&quot;: &quot;Silent Hunter 5® - Battle of the  [字符串的其余部分被截断]&quot;; 的本地化字符串。
         /// </summary>
         internal static string game {
             get {
