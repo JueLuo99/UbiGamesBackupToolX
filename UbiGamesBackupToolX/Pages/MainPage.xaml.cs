@@ -1,25 +1,15 @@
-﻿using Microsoft.Win32;
-using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Forms;
 using System.Windows.Input;
-using System.Windows.Markup;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 using UbiGamesBackupToolX.Bean;
 using UbiGamesBackupToolX.Utils;
+using MessageBox = System.Windows.MessageBox;
 
 namespace UbiGamesBackupToolX.Pages
 {
@@ -195,8 +185,12 @@ namespace UbiGamesBackupToolX.Pages
             ALLClick();
         }
 
-        public void InitUserList(String path)
+        public void InitUserList(string path)
         {
+            if (path == null) {
+                MessageBox.Show("找不到Uplay安装位置，请确保已安装Uplay!");
+                return;
+            }
             List<UserInfo> userlist = null;
             SelectGameList = new List<string>();
             switch (toolMode)
@@ -209,38 +203,6 @@ namespace UbiGamesBackupToolX.Pages
                     break;
             }
             this.UserListView.ItemsSource = userlist;
-            //foreach (UserInfo userinfo in userlist)
-            //{
-            //    //-----------------------------开始添加用户---------------------------
-
-            //    //System.Windows.Controls.Button button = new System.Windows.Controls.Button();
-            //    ////button.Margin = new Padding(0, 0, 0, 0);
-            //    //UserListView.Children.Add(button);
-            //    //string imgpath = UbiFileUtils.USERICONLOCATION + "\\" + userinfo.UID + "_64.png";
-            //    //ImageBrush brush = UserImgDefaultImageBrush;
-            //    //if (File.Exists(imgpath))
-            //    //{
-            //    //    ImageSource bi = ChangeBitmapToImageSource(OverDrawHeadImg(imgpath));
-            //    //    brush = new ImageBrush
-            //    //    {
-            //    //        ImageSource = bi
-            //    //    };
-            //    //}
-            //    //else
-            //    //{
-
-            //    //}
-            //    //button.Background = brush;
-            //    //button.Width = 48;
-            //    //button.Height = 48;
-            //    //button.Tag = userinfo;
-            //    //button.ToolTip = userinfo.UNAME;
-            //    //button.Click += new RoutedEventHandler(this.UserButtonClick);
-
-
-            //    //toolTip1.SetToolTip(button, userinfo.UNAME);
-            //    //CheckGameSaveDirectory();
-            //}
             SelectUser = userlist[0];
             userlist[0].selected = true;
             InitGameListPanel();

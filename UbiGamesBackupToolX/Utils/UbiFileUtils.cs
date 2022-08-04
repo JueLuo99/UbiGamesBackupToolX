@@ -13,7 +13,23 @@ namespace UbiGamesBackupToolX.Utils
         public static List<Game> SupportGameList = GetSupportGame();
         public static string USERINFOLOCATION = System.Environment.GetEnvironmentVariable("USERPROFILE") + "\\AppData\\Local\\Ubisoft Game Launcher\\users.dat";
         public static string USERSETTINGLOCATION = System.Environment.GetEnvironmentVariable("USERPROFILE") + "\\AppData\\Local\\Ubisoft Game Launcher\\settings.yml";
-        public static string UPLAYINSTALLLOCATION { get; } = GetUplayPath().Split(new char[] { '"', })[1].Substring(0, GetUplayPath().LastIndexOf('\\'));
+        public static string UPLAYINSTALLLOCATION
+        {
+            get
+            {
+                string uplayPath = GetUplayPath();
+                string[] dp = uplayPath.Split(new char[] { '"', });
+                if (dp.Length > 2)
+                {
+                    return dp[1].Substring(0, uplayPath.LastIndexOf('\\'));
+                }
+                else
+                {
+                    return null;
+                }
+
+            }
+        }
         public static string UPLAYSAVEGAME
         {
             get
@@ -72,19 +88,19 @@ namespace UbiGamesBackupToolX.Utils
                 string softPath = @"SOFTWARE\Classes\uplay\Shell\Open\Command";
                 RegistryKey regKey = Registry.LocalMachine;
                 RegistryKey regSubKey = regKey.OpenSubKey(softPath, false);
-
+                if (regSubKey == null) { return ""; }
                 object objResult = regSubKey.GetValue(strKeyName);
                 RegistryValueKind regValueKind = regSubKey.GetValueKind(strKeyName);
                 if (regValueKind == Microsoft.Win32.RegistryValueKind.String)
                 {
                     return objResult.ToString();
                 }
+                return "";
             }
             catch
             {
-                return "自动获取Uplay安装路径失败,请尝试手动选择";
+                return "";
             }
-            return null;
         }
 
         /// <summary>
@@ -251,7 +267,7 @@ namespace UbiGamesBackupToolX.Utils
                             //}
 
                             // 上方为使用Uplay缓存图片 已弃用
-                            if(g.gameicon.Trim()!="")
+                            if (g.gameicon.Trim() != "")
                             {
                                 g.imgpath = GAMEICON + g.gameicon;
                             }
