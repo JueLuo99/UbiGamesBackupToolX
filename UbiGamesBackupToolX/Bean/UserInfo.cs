@@ -11,12 +11,28 @@ namespace UbiGamesBackupToolX.Bean
     [JsonObject(MemberSerialization.OptOut)]
     public class UserInfo: INotifyPropertyChanged
     {
+        /// <summary>
+        /// 用户ID
+        /// </summary>
         public string UID { get; set; }
-        public string UNAME { get; set; }
+        /// <summary>
+        /// 备份时间
+        /// </summary>
         public string BackupTime { get; set; }
+        /// <summary>
+        /// 用户存档位置
+        /// </summary>
         public string USERSAVEGAME { get; set; }
+        /// <summary>
+        /// 用户头像
+        /// </summary>
         public string USERIMAGE { get; set; }
+
         private bool _selected = false;
+
+        /// <summary>
+        /// 是否被选中
+        /// </summary>
         [JsonIgnore]
         public bool selected { get {
                 return _selected;

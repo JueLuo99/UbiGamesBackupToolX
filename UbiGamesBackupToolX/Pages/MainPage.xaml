@@ -23,7 +23,7 @@
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Ellipse Tag="{Binding}" Style="{StaticResource UserImgStyle}" Margin="0,5" Height="48" Width="48" ToolTip="{Binding Path=UNAME}" MouseLeftButtonUp="UserImgPanelMouseLeftUp">
+                            <Ellipse Tag="{Binding}" Style="{StaticResource UserImgStyle}" Margin="0,5" Height="48" Width="48" ToolTip="{Binding Path=UID}" MouseLeftButtonUp="UserImgPanelMouseLeftUp">
                                 <Ellipse.Fill>
                                     <ImageBrush ImageSource="{Binding Path=USERIMAGE}"/>
                                 </Ellipse.Fill>

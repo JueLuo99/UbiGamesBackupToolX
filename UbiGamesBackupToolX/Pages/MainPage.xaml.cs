@@ -69,7 +69,7 @@ namespace UbiGamesBackupToolX.Pages
                         if (folderBrowserDialogBackupTo.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                         {
                             SelectUser.BackupTime = string.Format("{0:yyyy-MM-dd HH.mm.ss}", DateTime.Now);
-                            String backupPath = folderBrowserDialogBackupTo.SelectedPath + System.IO.Path.DirectorySeparatorChar + SelectUser.UNAME + " " + SelectUser.BackupTime;
+                            String backupPath = folderBrowserDialogBackupTo.SelectedPath + System.IO.Path.DirectorySeparatorChar + SelectUser.UID + " " + SelectUser.BackupTime;
 
                             foreach (string path in SelectGameList)
                             {
@@ -125,7 +125,7 @@ namespace UbiGamesBackupToolX.Pages
                     {
                         InitUserList(folderBrowserDialogBackupTo.SelectedPath);
                         InitGameListPanel();
-                        toolstatus.Content = "由 " + SelectUser.UNAME + " 备份于" + SelectUser.BackupTime;
+                        toolstatus.Content = "由 " + SelectUser.UID + " 备份于" + SelectUser.BackupTime;
                         BackReBtn.Background = (ImageBrush)FindResource("RestoreImageBrush");
                         BackReBtn.ToolTip = "还原";
                     }
@@ -255,7 +255,7 @@ namespace UbiGamesBackupToolX.Pages
                 SelectGameList = new List<string>();
                 if (toolMode == ToolMode.Restore)
                 {
-                    toolstatus.Content = "由 " + SelectUser.UNAME + " 备份于" + SelectUser.BackupTime;
+                    toolstatus.Content = "由 " + SelectUser.UID + " 备份于" + SelectUser.BackupTime;
                 }
                 InitGameListPanel();
                 GC.Collect();

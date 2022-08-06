@@ -162,18 +162,8 @@ namespace UbiGamesBackupToolX
         {
             int tipShowMilliseconds = 1000;
             string tipTitle = name + "已启动";
-            string tipContent;
-            ToolTipIcon tipType;
-            if (UbiFileUtils.GetNowLoginUserID() == null)
-            {
-                tipContent = "准备失败，检查是否勾选“记住我”";
-                tipType = ToolTipIcon.Warning;
-            }
-            else
-            {
-                tipContent = "备份已准备";
-                tipType = ToolTipIcon.Info;
-            }
+            string tipContent = "备份已准备";
+            ToolTipIcon tipType = ToolTipIcon.Info; ;
             if (Config.Instance.RunGameTipStatus)
             {
                 notifyIcon.ShowBalloonTip(tipShowMilliseconds, tipTitle, tipContent, tipType);
@@ -185,38 +175,32 @@ namespace UbiGamesBackupToolX
             string tipTitle = name + "已结束";
             string tipContent;
             ToolTipIcon tipType;
-            string UID = UbiFileUtils.GetNowLoginUserID();
-            if (UID == null)
+            try
             {
-                tipContent = "尝试失败，检查是否勾选“记住我”";
-                tipType = ToolTipIcon.Warning;
-            }
-            else
-            {
-                try
-                {
-                    String backupPath = Config.Instance.AllowBackupPath + System.IO.Path.DirectorySeparatorChar + mainPage.SelectUser.UNAME;
+                // 按用户将该游戏全部备份
+                UbiFileUtils.GetUserIdList().ForEach(userId => {
+                    string backupPath = Config.Instance.AllowBackupPath + System.IO.Path.DirectorySeparatorChar + userId;
                     if (!Directory.Exists(backupPath))
                     {
                         Directory.CreateDirectory(backupPath);
                     }
                     foreach (Game g in games)
                     {
-                        if (Directory.Exists(UbiFileUtils.UPLAYSAVEGAME + System.IO.Path.DirectorySeparatorChar + UID + System.IO.Path.DirectorySeparatorChar + g.id))
+                        if (Directory.Exists(UbiFileUtils.UPLAYSAVEGAME + System.IO.Path.DirectorySeparatorChar + userId + System.IO.Path.DirectorySeparatorChar + g.id))
                         {
-                            UbiFileUtils.CopyDirectory(UbiFileUtils.UPLAYSAVEGAME + System.IO.Path.DirectorySeparatorChar + UID + System.IO.Path.DirectorySeparatorChar + g.id, backupPath);
+                            UbiFileUtils.CopyDirectory(UbiFileUtils.UPLAYSAVEGAME + System.IO.Path.DirectorySeparatorChar + userId + System.IO.Path.DirectorySeparatorChar + g.id, backupPath);
                         }
                     }
-                    UbiFileUtils.OutBackupInfo(backupPath, new UserInfo { UID = UID, UNAME = UbiFileUtils.GetUserNameforUID(UID), BackupTime = string.Format("{0:yyyy-MM-dd HH.mm.ss}", DateTime.Now), USERSAVEGAME = backupPath });
-                    tipContent = "备份完成";
-                    tipType = ToolTipIcon.Info;
-                }
-                catch (Exception e)
-                {
-                    tipContent = "备份失败";
-                    tipType = ToolTipIcon.Error;
-                    System.Windows.Forms.MessageBox.Show(e.ToString());
-                }
+                    UbiFileUtils.OutBackupInfo(backupPath, new UserInfo { UID = userId, BackupTime = string.Format("{0:yyyy-MM-dd HH.mm.ss}", DateTime.Now), USERSAVEGAME = backupPath });
+                });
+                tipContent = "备份完成";
+                tipType = ToolTipIcon.Info;
+            }
+            catch (Exception e)
+            {
+                tipContent = "备份失败";
+                tipType = ToolTipIcon.Error;
+                System.Windows.Forms.MessageBox.Show(e.ToString());
             }
             if (Config.Instance.ExitGameTipStatus)
             {
